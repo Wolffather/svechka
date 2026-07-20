@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-svechka}
+      POSTGRES_USER: ${POSTGRES_USER:-svechka}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-svechka}
+    volumes:
+      - svechka-postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ../svechka_backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-svechka}
+      DB_USER: ${POSTGRES_USER:-svechka}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-svechka}
+      JWT_SECRET: ${JWT_SECRET}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      AI_BASE_URL: ${AI_BASE_URL:-https://api.openai.com/v1}
+      AI_API_KEY: ${AI_API_KEY}
+      AI_TRANSCRIPTION_MODEL: ${AI_TRANSCRIPTION_MODEL:-whisper-1}
+      AI_CHAT_MODEL: ${AI_CHAT_MODEL:-gpt-4o-mini}
+      YANDEX_FOLDER_ID: ${YANDEX_FOLDER_ID}
+      YANDEX_API_KEY: ${YANDEX_API_KEY}
+      CORS_ALLOWED_ORIGINS: https://${DOMAIN:-localhost}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+volumes:
+  svechka-postgres-data:
+  caddy-data:
+  caddy-config:
