@@ -1,4 +1,4 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "/api";
+const API_BASE = "/api";
 // Recordings longer than ~25s make the backend fall back to Yandex SpeechKit's
 // long-running recognition API, which polls for up to 180s before giving up — this must
 // stay comfortably above that ceiling or the frontend aborts a request the backend is

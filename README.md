@@ -17,7 +17,7 @@ checked out at `../svechka_backend`.
 ## Running the full stack locally
 
 ```bash
-cp .env.example .env   # fill in AI_API_KEY and a real JWT_SECRET at minimum
+cp .env.example .env   # fill in DOMAIN (use "localhost" for local dev)
 docker compose up --build
 ```
 
