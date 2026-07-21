@@ -10,7 +10,7 @@ services:
       - "80:80"                                                                                                                                           
       - "443:443"                                                                                                                                         
     env_file:                                                                                                                                             
-      - .env                                                                                                                                              
+      - /opt/app/.env                                                                                                                                              
     volumes:                                                                                                                                              
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile                                                                                                            
       - caddy-data:/data                                                                                                                                  
