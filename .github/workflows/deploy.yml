@@ -29,4 +29,5 @@ jobs:
           timeout: 30m
           script: |
             cd /opt/app
-            docker compose up -d --build
+            docker compose up -d --build --force-recreate
+            docker compose restart caddy
