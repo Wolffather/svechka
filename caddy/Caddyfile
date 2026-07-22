@@ -1,15 +1,16 @@
-{$DOMAIN} {
-	encode gzip
-
-	handle /api/* {
-		reverse_proxy host.docker.internal:8080
-	}
-
-	handle {
-		reverse_proxy frontend:80
-	}
-
-	log {
-		output stdout
-	}
-}
+{$DOMAIN} {                                                                                                                                                                                                                         
+    encode gzip                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                    
+    handle /api/* {                                                                                                                                                                                                                 
+        reverse_proxy app-backend-1:8080                                                                                                                                                                                            
+    }                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                    
+    handle {                                                                                                                                                                                                                        
+        reverse_proxy frontend:80                                                                                                                                                                                                   
+    }                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                    
+    log {                                                                                                                                                                                                                           
+        output stdout                                                                                                                                                                                                               
+    }                                                                                                                                                                                                                               
+}                                                                                                                                                                                                                                   
+     

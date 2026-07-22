@@ -1,24 +1,32 @@
-services:
-  frontend:
-    build:
-      context: ./frontend
-    restart: unless-stopped
-
-  caddy:                                                                                                                                                  
-    image: caddy:2-alpine                                                                                                                                 
-    ports:                                                                                                                                                
-      - "80:80"                                                                                                                                           
-      - "443:443"                                                                                                                                         
-    env_file:                                                                                                                                             
-      - /opt/app/.env                                                                                                                                              
-    volumes:                                                                                                                                              
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile                                                                                                            
-      - caddy-data:/data                                                                                                                                  
-      - caddy-config:/config                                                                                                                              
-    depends_on:                                                                                                                                           
-      - frontend                                                                                                                                          
-    restart: unless-stopped     
-
-volumes:
-  caddy-data:
-  caddy-config:
+services:                                                                                                                                                                                                                           
+  frontend:                                                                                                                                                                                                                         
+    build:                                                                                                                                                                                                                          
+      context: ./frontend                                                                                                                                                                                                           
+    restart: unless-stopped                                                                                                                                                                                                         
+    networks:                                                                                                                                                                                                                       
+      - svechka-network                                                                                                                                                                                                             
+                                                                                                                                                                                                                                    
+  caddy:                                                                                                                                                                                                                            
+    image: caddy:2-alpine                                                                                                                                                                                                           
+    ports:                                                                                                                                                                                                                          
+      - "80:80"                                                                                                                                                                                                                     
+      - "443:443"                                                                                                                                                                                                                   
+    env_file:                                                                                                                                                                                                                       
+      - /opt/app/.env                                                                                                                                                                                                               
+    volumes:                                                                                                                                                                                                                        
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile                                                                                                                                                                                      
+      - caddy-data:/data                                                                                                                                                                                                            
+      - caddy-config:/config                                                                                                                                                                                                        
+    depends_on:                                                                                                                                                                                                                     
+      - frontend                                                                                                                                                                                                                    
+    restart: unless-stopped                                                                                                                                                                                                         
+    networks:                                                                                                                                                                                                                       
+      - svechka-network                                                                                                                                                                                                             
+                                                                                                                                                                                                                                    
+volumes:                                                                                                                                                                                                                            
+  caddy-data:                                                                                                                                                                                                                       
+  caddy-config:                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                    
+networks:                                                                                                                                                                                                                           
+  svechka-network:                                                                                                                                                                                                                  
+    external: true     
