@@ -4,7 +4,7 @@ services:
       context: ./frontend                                                                                                                                                                                                           
     restart: unless-stopped                                                                                                                                                                                                         
     networks:                                                                                                                                                                                                                       
-      - svechka-network                                                                                                                                                                                                             
+      - app_svechka-network                                                                                                                                                                                                         
                                                                                                                                                                                                                                     
   caddy:                                                                                                                                                                                                                            
     image: caddy:2-alpine                                                                                                                                                                                                           
@@ -21,12 +21,12 @@ services:
       - frontend                                                                                                                                                                                                                    
     restart: unless-stopped                                                                                                                                                                                                         
     networks:                                                                                                                                                                                                                       
-      - svechka-network                                                                                                                                                                                                             
+      - app_svechka-network                                                                                                                                                                                                         
                                                                                                                                                                                                                                     
 volumes:                                                                                                                                                                                                                            
   caddy-data:                                                                                                                                                                                                                       
   caddy-config:                                                                                                                                                                                                                     
                                                                                                                                                                                                                                     
 networks:                                                                                                                                                                                                                           
-  svechka-network:                                                                                                                                                                                                                  
-    external: true     
+  app_svechka-network:                                                                                                                                                                                                              
+    external: true   
